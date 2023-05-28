@@ -7,9 +7,10 @@ Standards-Version: 4.5.0
 Package: meson-installer
 Architecture: all
 Depends: python3 (>= 3.7), ninja-build (>= 1.6)
+Conflicts: meson
 Description: install Meson using pip
  Meson is a build system designed to increase programmer productivity. 
  It does this by providing a fast, simple and easy to use interface for modern 
  software development tools and practices.
- 
+ .
  This package installs Meson via pip to enable access to more recent versions.
