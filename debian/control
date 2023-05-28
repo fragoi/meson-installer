@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 12)
 
 Package: meson-installer
 Architecture: all
-Depends: ${misc:Depends}, python3 (>= 3.7), ninja-build (>= 1.6)
+Depends: ${misc:Depends}, python3 (>= 3.7), ninja-build (>= 1.6), python3-pip
 Conflicts: meson
 Description: install Meson using pip
  Meson is a build system designed to increase programmer productivity. 
