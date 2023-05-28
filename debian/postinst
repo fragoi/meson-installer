@@ -2,13 +2,16 @@
 
 #DEBHELPER#
 
+packageVersion() {
+  dpkg-query --show --showformat='${Version}' meson-installer
+}
+
 installMeson() {
-  local version=$1
-  local mesonVersion=${version%~*}
-  echo "Installing Meson version: ${mesonVersion}"
-  python3 -m pip install meson==${mesonVersion}
+  local packageVersion=$(packageVersion)
+  local mesonVersion=${packageVersion%~*}
+  pip3 install --no-warn-script-location meson==${mesonVersion}
 }
 
 if [ "$1" = "configure" ]; then
-  installMeson "$2"
+  installMeson
 fi
