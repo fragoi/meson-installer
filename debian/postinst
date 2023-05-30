@@ -2,11 +2,10 @@
 
 #DEBHELPER#
 
-PACKAGE_VERSION="#ENV.PACKAGE_VERSION#"
+MESON_VERSION="#ENV.MESON_VERSION#"
 
 installMeson() {
-  local mesonVersion="${PACKAGE_VERSION%~*}"
-  pip3 install --no-warn-script-location meson=="${mesonVersion}"
+  pip3 install --no-warn-script-location meson=="${MESON_VERSION}"
 }
 
 if [ "$1" = "configure" ]; then
