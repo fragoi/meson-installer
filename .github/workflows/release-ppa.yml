@@ -1,0 +1,34 @@
+name: Build and release PPA
+
+on:
+  push:
+    tags:
+      - v*
+
+env:
+  PPA: ppa:fragoi/test
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fragoi/bash-actions@main
+
+      - name: Download source
+        run: |
+          downloadTag fragoi/meson-installer $GITHUB_REF_NAME
+
+      - name: Build source package
+        uses: fragoi/debuild-action@main
+        with:
+          ppa: ${{ env.PPA }}
+
+      - if: false
+        name: Upload source package
+        uses: fragoi/debsign-action@main
+        with:
+          ppa: ${{ env.PPA }}
+          gpg_key: ${{ secrets.SIGN_KEY }}
+          gpg_pass: ${{ secrets.SIGN_PASS }}
+          ssh_key: ${{ secrets.UPLOAD_PASS }}
+          ssh_pass: ${{ secrets.UPLOAD_PASS }}
