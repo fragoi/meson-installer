@@ -1,6 +1,7 @@
 name: Build and release PPA
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - v*
@@ -23,12 +24,12 @@ jobs:
         with:
           ppa: ${{ env.PPA }}
 
-      - if: false
+      - if: ${{ vars.DEBSIGN }}
         name: Upload source package
         uses: fragoi/debsign-action@main
         with:
           ppa: ${{ env.PPA }}
-          gpg_key: ${{ secrets.SIGN_KEY }}
-          gpg_pass: ${{ secrets.SIGN_PASS }}
-          ssh_key: ${{ secrets.UPLOAD_PASS }}
-          ssh_pass: ${{ secrets.UPLOAD_PASS }}
+          gpg_key: ${{ secrets.GPG_KEY }}
+          gpg_pass: ${{ secrets.GPG_PASS }}
+          ssh_key: ${{ secrets.SSH_PASS }}
+          ssh_pass: ${{ secrets.SSH_PASS }}
