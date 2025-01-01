@@ -7,6 +7,7 @@ on:
       - v*
 
 env:
+  DEBPACKAGE: meson-installer
   PPA: ppa:fragoi/test
 
 jobs:
