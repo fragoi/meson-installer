@@ -35,6 +35,10 @@ jobs:
         run: |
           debNewVersion "${{ inputs.upstream_version }}"
 
+      - name: Download version package
+        run: |
+          downloadTag $GITHUB_REPOSITORY v$(debChangelogVersion)
+
       - name: Build source package
         uses: fragoi/debuild-action@main
         with:
