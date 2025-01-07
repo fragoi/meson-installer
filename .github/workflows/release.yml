@@ -22,10 +22,10 @@ env:
   GIT_USER_EMAIL: fragoibot@gmail.com
   DEBPACKAGE: meson-installer
   DEBDIST: focal
-  PPA: ppa:fragoi/test
 
 jobs:
-  release:
+
+  version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,10 +39,9 @@ jobs:
         run: |
           downloadTag $GITHUB_REPOSITORY v$(debChangelogVersion)
 
-      - name: Build source package
-        uses: fragoi/debuild-action@main
-        with:
-          ppa: ${{ env.PPA }}
-
-      - name: List files
-        run: ls -la
+  release:
+    needs: [version]
+    uses: fragoi/ppa-release/.github/workflows/release.yml@main
+    with:
+      package: meson-installer
+      ppa: ppa:fragoi/test
