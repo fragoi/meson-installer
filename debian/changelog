@@ -1,3 +1,10 @@
+meson-installer (1.1.1+7) focal; urgency=medium
+
+  * Notify ppa repository
+  * Rename workflow
+
+ -- Fra Bot <fragoibot@gmail.com>  Tue, 14 Jan 2025 18:38:29 +0000
+
 meson-installer (1.1.1+6) focal; urgency=medium
 
   * Use shared workflow for release
