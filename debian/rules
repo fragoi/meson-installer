@@ -1,8 +1,3 @@
 #!/usr/bin/make -f
-
-meson_version = $(shell dpkg-parsechangelog -S Version | sed -E 's/[~+-].+//')
-
-binary: export MESON_VERSION = $(meson_version)
-
 %:
 	dh $@
