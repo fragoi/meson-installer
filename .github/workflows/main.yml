@@ -13,6 +13,11 @@ on:
         required: false
         type: string
   workflow_dispatch:
+    inputs:
+      upstream_version:
+        description: The upstream version
+        required: false
+        type: string
 
 permissions:
   contents: write
