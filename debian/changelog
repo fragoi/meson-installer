@@ -1,7 +1,6 @@
 meson-installer (1.0.0-2) focal; urgency=medium
 
   * Disable pip cache
-  * Exclude workflows from changelog
 
  -- Fra Bot <fragoibot@gmail.com>  Thu, 23 Jan 2025 00:49:16 +0000
 
