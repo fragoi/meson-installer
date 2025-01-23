@@ -3,7 +3,8 @@
 #DEBHELPER#
 
 installMeson() {
-  pip3 install --upgrade --no-index --no-warn-script-location \
+  pip3 install --upgrade --no-index \
+    --no-cache-dir --no-warn-script-location \
     --find-links=/var/lib/meson-installer \
     meson
 }
