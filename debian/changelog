@@ -1,3 +1,9 @@
+meson-installer (1.0.0-3) focal; urgency=medium
+
+  * ci: ignore github directory from export
+
+ -- Fra Bot <fragoibot@gmail.com>  Fri, 14 Feb 2025 15:58:53 +0000
+
 meson-installer (1.0.0-2) focal; urgency=medium
 
   * Disable pip cache
