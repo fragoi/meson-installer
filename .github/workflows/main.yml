@@ -25,7 +25,6 @@ permissions:
 env:
   GIT_USER_NAME: Fra Bot
   GIT_USER_EMAIL: fragoibot@gmail.com
-  EXCLUDE_FILES: .github/**
   DEBPACKAGE: meson-installer
   DEBDIST: focal
 
@@ -34,7 +33,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.exportVersion.outputs.version }}
+      new_version: ${{ steps.exportVersion.outputs.NEW_VERSION }}
     steps:
       - uses: actions/checkout@v3
       - uses: fragoi/bash-actions@main
@@ -44,19 +43,20 @@ jobs:
       - name: Export version
         id: exportVersion
         run: |
-          output version=$(debChangelogVersion)
+          outputSharedVars NEW_VERSION
 
   notify-ppa:
     needs: [release]
     runs-on: ubuntu-latest
     continue-on-error: true
+    if: ${{ needs.release.outputs.new_version }}
     steps:
       - uses: fragoi/bash-actions@main
       - name: Notify PPA repository
         env:
-          VERSION: ${{ needs.release.outputs.version }}
+          NEW_VERSION: ${{ needs.release.outputs.new_version }}
           GITHUB_TOKEN: ${{ secrets.PPA_TOKEN }}
         run: |
           repositoryDispatch fraorg/meson-installer-ppa \
             -f event_type=new_version \
-            -f client_payload[version]="$VERSION"
+            -f client_payload[version]="$NEW_VERSION"
