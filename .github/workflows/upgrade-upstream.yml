@@ -31,5 +31,6 @@ jobs:
     needs: update
     if: ${{ needs.update.outputs.new_version }}
     uses: './.github/workflows/main.yml'
+    secrets: inherit
     with:
       upstream_version: ${{ needs.update.outputs.new_version }}
