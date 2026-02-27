@@ -1,0 +1,35 @@
+name: Upgrade upstream version
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 8 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.newUpstreamVersion.outputs.new_version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: fragoi/bash-actions@v2
+      - name: Check for new version
+        id: newUpstreamVersion
+        run: |
+          newUpstreamVersion=$(
+            peelTags \
+              --remote=${GITHUB_SERVER_URL}/mesonbuild/meson \
+              | debFilterNextUpver
+          )
+          output new_version="$newUpstreamVersion"
+
+  upgrade:
+    needs: update
+    if: ${{ needs.update.outputs.new_version }}
+    uses: './.github/workflows/main.yml'
+    with:
+      upstream_version: ${{ needs.update.outputs.new_version }}
