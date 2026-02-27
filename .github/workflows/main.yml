@@ -26,7 +26,6 @@ env:
   GIT_USER_NAME: Fra Bot
   GIT_USER_EMAIL: fragoibot@gmail.com
   DEBPACKAGE: meson-installer
-  DEBDIST: focal
 
 jobs:
 
@@ -35,7 +34,7 @@ jobs:
     outputs:
       new_version: ${{ steps.exportVersion.outputs.NEW_VERSION }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: fragoi/bash-actions@v2
       - name: Create release
         run: |
@@ -46,10 +45,24 @@ jobs:
           outputSharedVars NEW_VERSION
 
   notify-ppa:
-    needs: [release]
+    needs: release
     runs-on: ubuntu-latest
     continue-on-error: true
     if: ${{ needs.release.outputs.new_version }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        dist:
+          - name: focal
+            rev: '20.04'
+          - name: jammy
+            rev: '22.04'
+          - name: noble
+            rev: '24.04'
+          - name: questing
+            rev: '25.10'
+          - name: resolute
+            rev: '26.04'
     steps:
       - uses: fragoi/bash-actions@v2
       - name: Notify PPA repository
@@ -59,4 +72,6 @@ jobs:
         run: |
           repositoryDispatch fraorg/meson-installer-ppa \
             -f event_type=new_version \
-            -f client_payload[version]="$NEW_VERSION"
+            -f client_payload[version]="$NEW_VERSION" \
+            -f client_payload[dist]=${{ matrix.dist.name }} \
+            -f client_payload[distrev]=${{ matrix.dist.rev }}
