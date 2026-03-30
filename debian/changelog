@@ -1,3 +1,9 @@
+meson-installer (1.10.2-1) UNRELEASED; urgency=medium
+
+  * upstream version 1.10.2
+
+ -- Fra Bot <fragoibot@gmail.com>  Mon, 30 Mar 2026 09:56:25 +0000
+
 meson-installer (1.10.1-1) UNRELEASED; urgency=medium
 
   * upstream version 1.10.1
